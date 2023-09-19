@@ -21,6 +21,9 @@ App {
             }
         }
     }
+    onInitTheme: {
+        Theme.tabBar.backgroundColor = "green"
+    }
 
     Loader{
         id: _regLoader

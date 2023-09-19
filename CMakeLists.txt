@@ -34,7 +34,12 @@ list(REMOVE_ITEM AssetsFiles ${QmlFiles})
 
 qt_add_executable(appsyllabus_mobile_app
     src/main.cpp
-
+    src/operations.cpp
+    src/request.cpp
+    src/response.cpp
+    include/operations.h
+    include/request.h
+    include/response.h
 
 
     ${QmlFiles}

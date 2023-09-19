@@ -6,6 +6,7 @@ import "../reusables"
 import "../utils.js" as Utils
 
 Item{
+    id: _item4
     Layout.preferredHeight: implicitHeight
     implicitHeight: _col16.implicitHeight
     ColumnLayout{
@@ -28,7 +29,8 @@ Item{
             spacing: 10
             orientation: ListView.Horizontal
             Component.onCompleted: {
-                _searchSwipe.implicitHeight = contentHeight + 100
+                _searchBar.implicitHeight = contentHeight
+                //_searchSwipe.implicitHeight = contentHeight + 100
             }
             model: ListModel{
                 ListElement{
@@ -68,6 +70,35 @@ Item{
                     Layout.fillWidth: true
                     color: "#ffffff"
                     Layout.leftMargin: 20
+                }
+                ListView{
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 260
+                    Layout.leftMargin: 20
+                    Layout.rightMargin: 20
+                    spacing: 10
+                    orientation: ListView.Horizontal
+                    Component.onCompleted: {
+                        _searchBar.implicitHeight = contentHeight
+                        //_searchSwipe.implicitHeight = contentHeight
+                    }
+                    model: ListModel{
+                        ListElement{
+                            name: "Evolutionary Biology"
+                            numSyllabus: 4
+                            thumbnail: "../../assets/red_blood_cells.jpg"
+                        }
+                        ListElement{
+                            name: "Development Biology"
+                            numSyllabus: 14
+                            thumbnail: "../../assets/anatomy.jpg"
+                        }
+                    }
+                    delegate: CourseItem{
+                        name: model.name
+                        numSyllabus: model.numSyllabus
+                        thumbnail: model.thumbnail
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ import "../utils.js" as Utils
 QC2.Pane {
     id: _courseItem
     QC2.Material.background: Utils.colors.darkBlue
+    //width: parent.width
     width: parent.width
     height: 260
     property string name: "Development Biology"

@@ -6,9 +6,11 @@ import "../reusables"
 
 
 Item{
+    id: _item5
     width: _root.width
     height: implicitHeight
     implicitHeight: _col13.implicitHeight
+    readonly property alias _swipeView: _searchSwipe
     ColumnLayout{
         id: _col13
         anchors.fill: parent
