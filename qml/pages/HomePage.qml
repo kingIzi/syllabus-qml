@@ -16,11 +16,96 @@ AppPage{
     state: "normal"
     rightBarItem: IconButtonBarItem{
         iconType: IconType.user
+        onClicked: {
+            _drawer.open()
+        }
     }
     title: "Welcome"
     Component.onCompleted: {
         _homePage.navigationBarTranslucency = 1.0
         _admin.getCourseList(_getCoursesList)
+    }
+    QC2.Drawer{
+        id: _drawer
+        width: parent.width
+        height: 500
+        edge: "BottomEdge"
+        readonly property var _user: _admin.userProfile
+        ColumnLayout{
+            anchors{
+                top: parent.top
+                left: parent.left
+                right: parent.right
+            }
+            anchors.topMargin: 40
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
+            anchors.bottomMargin: 10
+            spacing: 20
+            Item{
+                Layout.fillWidth: true
+                Layout.preferredHeight: _col4.implicitHeight
+                ColumnLayout{
+                    id: _col4
+                    anchors.fill: parent
+                    AppText{
+                        text: "Full name"
+                        font: Utils.h6()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                    AppText{
+                        readonly property string _names: _drawer._user.fullName
+                        text: _names
+                        font: Utils.h4()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                }
+            }
+            Item{
+                Layout.fillWidth: true
+                Layout.preferredHeight: _col5.implicitHeight
+                ColumnLayout{
+                    id: _col5
+                    anchors.fill: parent
+                    AppText{
+                        text: "Email"
+                        font: Utils.h6()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                    AppText{
+                        readonly property string _email: _drawer._user.email
+                        text: _email
+                        font: Utils.h4()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                }
+            }
+            Item{
+                Layout.fillWidth: true
+                Layout.preferredHeight: _col6.implicitHeight
+                ColumnLayout{
+                    id: _col6
+                    anchors.fill: parent
+                    AppText{
+                        text: "Phone number"
+                        font: Utils.h6()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                    AppText{
+                        readonly property string _phoneNo: _drawer._user.phoneNo
+                        text: _phoneNo
+                        font: Utils.h4()
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                    }
+                }
+            }
+        }
     }
     Image {
         id: _pageBg
@@ -32,7 +117,6 @@ AppPage{
         readonly property int batchSize: 20
         readonly property string cursor: ""
     }
-
     AppFlickable{
         id: _flick
         anchors.fill: parent
@@ -77,15 +161,15 @@ AppPage{
                     }
                 }
             }
-            SearchBar{
-                Layout.fillWidth: true
-                Layout.leftMargin: 20
-                Layout.rightMargin: 20
-                barBackgroundColor: "white"
-                implicitHeight: 50
-                showClearButton: true
-                placeHolderText: qsTr("Maths, Biology, Physics, Social sciences")
-            }
+//            SearchBar{
+//                Layout.fillWidth: true
+//                Layout.leftMargin: 20
+//                Layout.rightMargin: 20
+//                barBackgroundColor: "white"
+//                implicitHeight: 50
+//                showClearButton: true
+//                placeHolderText: qsTr("Maths, Biology, Physics, Social sciences")
+//            }
             Rectangle{
                 Layout.fillWidth: true
                 Layout.preferredHeight: _col3.implicitHeight
@@ -98,6 +182,7 @@ AppPage{
                     Item{
                         Layout.fillWidth: true
                         Layout.preferredHeight: _col18.implicitHeight
+                        visible: false
                         ColumnLayout{
                             id: _col18
                             anchors.fill: parent

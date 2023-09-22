@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Material
+import QtWebView
 import Felgo
 import "../components"
 import "../reusables"
@@ -45,6 +46,20 @@ AppPage {
                 model: _lessonsPage._lessons
                 spacing: 10
                 delegate: AppListItem{
+                    id: _listItem
+                    Component{
+                        id: _webView
+                        AppPage{
+                            WebView{
+                                id: _web
+                                url: "www.google.com"
+                                anchors.fill: parent
+                                Component.onCompleted: {
+                                    console.log(_web.url)
+                                }
+                            }
+                        }
+                    }
                     text: modelData.name
                     detailText: modelData.description
                     leftItem: RoundedImage{
@@ -53,6 +68,13 @@ AppPage {
                         height: width
                         source: "qrc:/assets/png-pdf-file-icon-8.png"
                         anchors.verticalCenter: parent.verticalCenter
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            //_lessonsPage.navigationStack.push(_webView)
+                            Qt.openUrlExternally(modelData.url)
+                        }
                     }
                 }
             }

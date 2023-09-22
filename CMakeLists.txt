@@ -6,6 +6,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Felgo REQUIRED)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Network WebView)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network WebView)
+
 
 # Project identifier and version
 # More information: https://felgo.com/doc/felgo-publishing/#project-configuration
@@ -85,7 +88,8 @@ qt_add_qml_module(appsyllabus_mobile_app
 target_compile_definitions(appsyllabus_mobile_app
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(appsyllabus_mobile_app PRIVATE Felgo)
+target_link_libraries(appsyllabus_mobile_app PRIVATE Felgo Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::WebView)
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/

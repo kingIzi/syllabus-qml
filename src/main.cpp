@@ -2,7 +2,7 @@
 #include <FelgoApplication>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
-
+#include <QtWebView/QtWebView>
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 #include <FelgoLiveClient>
 #include "admin.h"
@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-
+    QtWebView::initialize();
     QApplication app(argc, argv);
     Admin admin;
     FelgoApplication felgo;

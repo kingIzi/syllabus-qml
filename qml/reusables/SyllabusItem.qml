@@ -87,12 +87,12 @@ QC2.Pane {
                     }
                 }
             }
-            IconButton{
-                anchors.top: parent.top
-                anchors.right: parent.right
-                iconType: IconType.heart
-                color: Utils.colors.brightRed
-            }
+//            IconButton{
+//                anchors.top: parent.top
+//                anchors.right: parent.right
+//                iconType: IconType.heart
+//                color: Utils.colors.brightRed
+//            }
         }
     }
 }
