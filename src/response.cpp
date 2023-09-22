@@ -45,9 +45,9 @@ void Response::parseSignInResponse(const QJsonDocument document)
         emit Response::signInError(messages[0]);
         return;
     }
-    const auto userObj = document.object().value("data").toObject().value("signUp").toObject();
+    const auto userObj = document.object().value("data").toObject().value("signIn").toObject();
     this->user = std::make_unique<User>(userObj);
-    emit Response::signInReady(*this->user.get());
+    emit Response::signInReady();
 }
 
 void Response::parseCoursesListResponse(const QJsonDocument document)
@@ -65,12 +65,7 @@ void Response::parseCoursesListResponse(const QJsonDocument document)
     const auto userObj = document.object().value("data").toObject().value("getCourseList").toObject();
     const auto list = userObj.value("list").toArray();
     const auto cursor = userObj.value("cursor").toString();
-    this->user = std::make_unique<User>(userObj);
-    QList<Course> courses; courses.reserve(list.size());
-    for (const auto& item : list){
-        courses.emplaceBack(Course(item.toObject()));
-    }
-    emit Response::coursesList(courses);
+    emit Response::coursesList(list,cursor);
 }
 
 void Response::parseCourseSyllabusResponse(const QJsonDocument document)
@@ -86,11 +81,7 @@ void Response::parseCourseSyllabusResponse(const QJsonDocument document)
         return;
     }
     const auto courseSyllabuses = document.object().value("data").toObject().value("getCourseSyllabus").toArray();
-    QList<Syllabus> syllabuses; syllabuses.reserve(courseSyllabuses.size());
-    for (const auto& syllabus : courseSyllabuses){
-        syllabuses.emplaceBack(syllabus.toObject());
-    }
-    emit Response::courseSyllabusList(syllabuses);
+    emit Response::courseSyllabusList(courseSyllabuses);
 }
 
 User * const Response::getUser() const

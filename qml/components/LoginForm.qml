@@ -17,6 +17,12 @@ ColumnLayout{
         color: "#ffffff"
         font: Utils.h1()
     }
+    QtObject {
+        id: _loginObj
+        readonly property string email: _email._textfield.text.trim()
+        readonly property string password: _password._textfield.text.trim()
+    }
+
     Component{
         id: _homePage
         HomePage{}
@@ -25,6 +31,15 @@ ColumnLayout{
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignVCenter
         Layout.preferredHeight: _col4.implicitHeight
+        Connections{
+            target: _admin
+            function onDisplayErrorMessage(message){
+                const words = message.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+                nativeUtils.displayMessageBox("Your username or password is incorrect.","Please try again",1)
+            }
+        }
+
         ColumnLayout{
             id: _col4
             anchors.fill: parent
@@ -58,6 +73,8 @@ ColumnLayout{
                         labelColorOn: "#D6FFFF"
                         labelColorOff: "#D6FFFF"
                         Layout.fillWidth: true
+                        checked: true
+                        enabled: false
                     }
                     AppText{
                         text: "Forgot password?"
@@ -80,7 +97,7 @@ ColumnLayout{
                     source: "../../assets/ConnectionButton.png"
                 }
                 onClicked: {
-                    _loginPage.navigationStack.push(_homePage)
+                    _admin.signInUser(_loginObj)
                 }
             }
         }

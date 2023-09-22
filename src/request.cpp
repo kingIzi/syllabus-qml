@@ -3,6 +3,24 @@
 #include <QHttpPart>
 
 
+void Request::connectUploadProgressSignal(QNetworkReply * const reply)
+{
+    QObject::connect(reply,&QNetworkReply::uploadProgress,this,[this](qint64 bytesSent,qint64 bytesTotal){
+        const auto percent = (static_cast<double>(bytesSent) / static_cast<double>(bytesTotal)) * 100.0;
+        qDebug() << percent;
+    });
+}
+
+void Request::connectSignInReply(QNetworkReply * const reply)
+{
+    this->connectUploadProgressSignal(reply);
+    QObject::connect(reply,&QNetworkReply::finished,this,[reply,this](){
+        const auto res = QJsonDocument::fromJson(reply->readAll());
+        this->response->parseSignInResponse(res);
+        reply->deleteLater();
+    });
+}
+
 Request::Request(QObject *parent)
     : QObject{parent},
       manager(std::make_unique<QNetworkAccessManager>(this)),
@@ -10,9 +28,7 @@ Request::Request(QObject *parent)
       response(std::make_unique<Response>()),
       url("http://localhost:5000/syllabustz-bd7fd/us-central1/helloWorld")
 {
-    QObject::connect(this->response.get(),&Response::signUpError,[](const QString msg){
-        qDebug() << msg;
-    });
+
 }
 
 Response * const Request::getResponse() const
@@ -49,11 +65,7 @@ void Request::signInUser(QObject * const signInObject)
         QNetworkRequest request(this->url);
         request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
         const auto reply = this->manager->post(request,document.toJson());
-        QObject::connect(reply,&QNetworkReply::finished,this,[reply,this](){
-            const auto res = QJsonDocument::fromJson(reply->readAll());
-            this->response->parseSignInResponse(res);
-            reply->deleteLater();
-        });
+        this->connectSignInReply(reply);
     } catch (const std::exception& e) {
         qDebug() << e.what();
     }

@@ -37,10 +37,19 @@ qt_add_executable(appsyllabus_mobile_app
     src/operations.cpp
     src/request.cpp
     src/response.cpp
+    src/admin.cpp
+    src/courselistdata.cpp
+    src/courselistmodel.cpp
+    src/syllabuslistmodel.cpp
+    src/syllabuslistdata.cpp
     include/operations.h
     include/request.h
     include/response.h
-
+    include/admin.h
+    include/courselistdata.h
+    include/courselistmodel.h
+    include/syllabuslistmodel.h
+    include/syllabuslistdata.h
 
     ${QmlFiles}
     ${AssetsFiles}
@@ -80,5 +89,5 @@ target_link_libraries(appsyllabus_mobile_app PRIVATE Felgo)
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
-#find_package(FelgoLive REQUIRED)
-#target_link_libraries(appsyllabus_mobile_app PRIVATE FelgoLive)
+find_package(FelgoLive REQUIRED)
+target_link_libraries(appsyllabus_mobile_app PRIVATE FelgoLive)

@@ -8,16 +8,25 @@ QC2.Pane {
     id: _syllabusItem
     width: parent.width
     height: 160
-    QC2.Material.background: Utils.colors.darkBlue
-    property string thumbnail: "../../assets/networking.jpg"
+    QC2.Material.background: _mouse.pressed ? Utils.colors.lightBlue : Utils.colors.darkBlue
+    property url thumbnail: "../../assets/networking.jpg"
     property string name: "Syllabus name"
     property string author: "Syllabus author"
     property string acronym: "SYL"
     property string course: "Syllabus course"
+    property var lessons: "LESSONS LIST HERE"
+    signal showSyllabuses(var syllabuses)
     Binding{
         target: _syllabusItem.background
         property: "radius"
         value: 10
+    }
+    MouseArea{
+        id: _mouse
+        anchors.fill: parent
+        onClicked: {
+            _syllabusItem.showSyllabuses(_syllabusItem.lessons)
+        }
     }
     RowLayout{
         anchors.fill: parent
@@ -68,13 +77,13 @@ QC2.Pane {
                             maximumLineCount: 1
                             Layout.fillWidth: true
                         }
-                        AppText{
-                            text: _syllabusItem.course
-                            maximumLineCount: 1
-                            Layout.fillWidth: true
-                            font: Utils.h6()
-                            color: Utils.colors.darkGrey
-                        }
+//                        AppText{
+//                            text: _syllabusItem.course
+//                            maximumLineCount: 1
+//                            Layout.fillWidth: true
+//                            font: Utils.h6()
+//                            color: Utils.colors.darkGrey
+//                        }
                     }
                 }
             }
