@@ -41,6 +41,7 @@ QC2.Pane {
         Item{
             Layout.fillWidth: true
             Layout.preferredHeight: _row3.implicitHeight
+            opacity: 0
             RowLayout{
                 id: _row3
                 anchors.fill: parent

@@ -170,12 +170,9 @@ AppPage{
 //                showClearButton: true
 //                placeHolderText: qsTr("Maths, Biology, Physics, Social sciences")
 //            }
-            Rectangle{
+            Item{
                 Layout.fillWidth: true
                 Layout.preferredHeight: _col3.implicitHeight
-                color: "transparent"
-                border.color: "red"
-                border.width: 2
                 ColumnLayout{
                     id: _col3
                     anchors.fill: parent

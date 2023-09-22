@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QGuiApplication>
 #include <FelgoApplication>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
@@ -11,8 +12,8 @@
 
 int main(int argc, char *argv[])
 {
+    QGuiApplication app(argc, argv);
     QtWebView::initialize();
-    QApplication app(argc, argv);
     Admin admin;
     FelgoApplication felgo;
 

@@ -72,8 +72,8 @@ AppPage {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            //_lessonsPage.navigationStack.push(_webView)
-                            Qt.openUrlExternally(modelData.url)
+                            _lessonsPage.navigationStack.push(_webView)
+                            //Qt.openUrlExternally(modelData.url)
                         }
                     }
                 }
