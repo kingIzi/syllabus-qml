@@ -26,7 +26,8 @@ Request::Request(QObject *parent)
       manager(std::make_unique<QNetworkAccessManager>(this)),
       operations(std::make_unique<Operations>()),
       response(std::make_unique<Response>()),
-      url("http://localhost:5000/syllabustz-bd7fd/us-central1/helloWorld")
+      //url("http://localhost:5000/syllabustz-bd7fd/asia-southeast2/graphql")
+      url("https://asia-southeast2-syllabustz-bd7fd.cloudfunctions.net/graphql")
 {
 
 }

@@ -25,6 +25,13 @@ AppPage{
         _homePage.navigationBarTranslucency = 1.0
         _admin.getCourseList(_getCoursesList)
     }
+    QC2.BusyIndicator{
+        id: _homePageBusy
+        running: true
+        anchors.centerIn: parent
+        QC2.Material.accent: Utils.colors.lightBlue
+        z: 50
+    }
     QC2.Drawer{
         id: _drawer
         width: parent.width
@@ -213,6 +220,9 @@ AppPage{
                             target: _admin
                             function onCourseList(courseList,cursor){
                                 _listModel.populate(courseList)
+                                if (_homePageBusy.running){
+                                    _homePageBusy.running = false
+                                }
                             }
                         }
 
@@ -228,6 +238,7 @@ AppPage{
                                 Layout.leftMargin: 10
                             }
                             ListView{
+                                id: _courseListView
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 300
                                 orientation: ListView.Horizontal
@@ -245,7 +256,7 @@ AppPage{
                                         }
                                     }
                                     id: _courseItemDelegate
-                                    width: 300
+                                    width: _courseListView.width
                                     courseId: model.courseId
                                     name: model.courseName
                                     numSyllabus: model.numSyllabus

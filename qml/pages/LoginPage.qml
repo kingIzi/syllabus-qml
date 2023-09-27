@@ -8,6 +8,7 @@ import "../utils.js" as Utils
 
 AppPage {
     id: _loginPage
+    readonly property alias _loginPageBusy: _pageBusy
     Component.onCompleted: {
         _loginPage.navigationBarHidden = true
         _loginPage.navigationBarTranslucency = 0.0
@@ -20,6 +21,13 @@ AppPage {
         id: _pageBg
         source: "../../assets/registerPage.png"
         anchors.fill: parent
+    }
+    QC2.BusyIndicator{
+        id: _pageBusy
+        running: false
+        anchors.centerIn: parent
+        QC2.Material.accent: Utils.colors.lightBlue
+        z: 50
     }
     AppFlickable{
         id: _loginFlick

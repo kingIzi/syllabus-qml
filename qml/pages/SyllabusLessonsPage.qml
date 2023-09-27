@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.Material
-import QtWebView
+import QtQuick.Controls.Material as QC2
+import QtWebEngine
 import Felgo
 import "../components"
 import "../reusables"
@@ -47,16 +47,32 @@ AppPage {
                 spacing: 10
                 delegate: AppListItem{
                     id: _listItem
+                    readonly property url _url: modelData.url
                     Component{
                         id: _webView
                         AppPage{
-                            WebView{
+                            QC2.BusyIndicator{
+                                id: _webPageBusy
+                                running: _web.loading
+                                anchors.centerIn: parent
+                                QC2.Material.accent: Utils.colors.darkBlue
+                                z: 50
+                            }
+                            WebEngineView{
                                 id: _web
-                                url: "www.google.com"
+                                url: _listItem._url
                                 anchors.fill: parent
-                                Component.onCompleted: {
-                                    console.log(_web.url)
-                                }
+                                settings.pluginsEnabled: true
+                                settings.pdfViewerEnabled: true
+                                settings.allowGeolocationOnInsecureOrigins: true
+                                settings.allowRunningInsecureContent: true
+                            }
+                            Component.onCompleted: {
+                                _web.settings.pdfViewerEnabled = true
+                                _web.settings.pluginsEnabled = true
+                                console.log(_web.settings.pluginsEnabled)
+                                console.log(_web.settings.pdfViewerEnabled)
+                                console.log(_web.url)
                             }
                         }
                     }

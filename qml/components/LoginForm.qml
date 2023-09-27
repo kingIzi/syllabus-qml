@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Material as QC2
 import Felgo
+import QtQuick.Dialogs
 import "../utils.js" as Utils
 import "../reusables"
 import "../pages"
@@ -22,11 +23,16 @@ ColumnLayout{
         readonly property string email: _email._textfield.text.trim()
         readonly property string password: _password._textfield.text.trim()
     }
+    MessageDialog{
+        id: _msg
+
+    }
 
     Component{
         id: _homePage
         HomePage{}
     }
+
     Item{
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignVCenter
@@ -34,9 +40,12 @@ ColumnLayout{
         Connections{
             target: _admin
             function onDisplayErrorMessage(message){
+                _loginPageBusy.running = false
                 const words = message.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-
-                nativeUtils.displayMessageBox("Your username or password is incorrect.","Please try again",1)
+                _msg.title = "Try again."
+                _msg.text = "Your username or password is incorrect."
+                _msg.open()
+                //nativeUtils.displayMessageBox("Your username or password is incorrect.","Please try again",1)
             }
         }
 
@@ -98,6 +107,7 @@ ColumnLayout{
                 }
                 onClicked: {
                     _admin.signInUser(_loginObj)
+                    _loginPageBusy.running = true
                 }
             }
         }

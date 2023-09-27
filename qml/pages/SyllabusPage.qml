@@ -25,12 +25,20 @@ AppPage {
         target: _admin
         function onCourseSyllabuses(syllabuses){
             _syllabusListModel.populate(syllabuses)
+            _syllabusPageBusy.running = false
         }
     }
+
     Image {
         id: _pageBg
         source: "../../assets/registerPage.png"
         anchors.fill: parent
+    }
+    BusyIndicator{
+        id: _syllabusPageBusy
+        running: true
+        anchors.centerIn: parent
+        Material.accent: Utils.colors.lightBlue
     }
     AppFlickable{
         anchors.fill: parent

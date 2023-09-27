@@ -34,6 +34,7 @@ QC2.Pane {
             source: _syllabusItem.thumbnail
             Layout.maximumWidth: _syllabusItem.width / 4
             Layout.fillHeight: true
+            visible: false
         }
         Item{
             Layout.fillWidth: true
